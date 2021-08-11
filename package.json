@@ -1,0 +1,8 @@
+{
+  "scripts": {
+    "start": "mdx-deck index.mdx"
+  },
+  "dependencies": {
+    "mdx-deck": "^4.1.1"
+  }
+}

@@ -1,0 +1,600 @@
+import { themes } from 'mdx-deck';
+import AltWidth from './layouts/AltWidth.jsx';
+
+export const theme = {
+  ...themes.code,
+  colors: {
+    background: '#5F8BFA',
+  },
+  styles: {
+    inlineCode: {
+      fontStyle: 'italic',
+      color: '#f7ce45',
+    },
+  },
+};
+
+# Hydrogen Masterclass
+
+#### Aug 11, 2021
+
+---
+
+# Presentation Goals
+
+<Steps>
+
+- Why does Hydrogen exist?
+- Establish shared vocabulary
+- Explain lifecycle for components being added to Hydrogen
+- Discuss long-term future; How does Hydrogen fit in?
+
+</Steps>
+
+<Notes>
+
+- Why does Hydrogen Exist?
+  - Why is it important to Engineering?
+  - Why is it important to Design?
+  - How does it help Design, Product, and Engineering speak the same language / be on the same page?
+  - The argument to not build bloat (use existing components, hosted storybook for transparency)
+- Design-Driven Components
+  - SOLID, the important parts
+  - ADRS / Docs Docs Docs / Let the docs and tests tell the full story so we don't have to
+  - Base / Variant pattern
+- Hydrogen Lifecycle
+  - New mockup, is this a hydrogen component?
+    - no business data in hydrogen
+    - does it already exist, is it a new variant, or is it a new base?
+    - can we use something that already exists?
+  - create new story for hydrogen component
+  - time to build!
+    - design conversation; be specific and general; "design it twice"
+    - document conversation; ADR
+    - seek approval on ADR; first quality gate; do we have the right abstraction?
+    - TDD - initial implementation
+      - answering "what if we have the wrong abstraction" and changes to interface
+    - release & ship
+- Hydrogen in a larger context
+  - What is the Ether repo?
+  - What are the long-term goals & plans for hydrogen?
+  - Ownership / Quality Gates
+  - DRY / Reusable
+  - Micro Frontends, new applications (customer dashboard, new brand voice)
+
+</Notes>
+
+---
+
+# What is Hydrogen _really_?
+
+---
+
+<AltWidth>
+
+# A Design System, not a Component Library
+
+A design system is much more than just a component library. While a component library is simply a collection of re-usable components and functions, a fully-fledged design system is often composed of a design `language`, UX `guidelines`, and code `implementations` (the component library).
+
+</AltWidth>
+
+---
+
+<AltWidth>
+
+# Design Language
+
+In its simplest form, a design language is a collection of typography, colors, icons, and animations that will be used throughout the whole design system. This is essential as it prevents unnecessary variants.
+
+We see the result of _not_ following a design language when we look at just about any of our global config objects (COLORS, COLORS2, SIZES). A good design language eliminates unneccesary variants at the lowest levels.
+
+</AltWidth>
+
+---
+
+![Sizes](https://i.imgur.com/t5mBVIu.png)
+
+---
+
+<AltWidth>
+
+# UX Guidelines
+
+Usually includes things like rules to determine padding and margin, grid-based design, choosing accessible colors, etc. Many of these guidelines apply to the design team primarily, but there are considerations we as engineers should be making when we build things.
+
+This can include using appropriate accessibility tags on our components (`aria-*`, `labels`, `placeholders`, etc), allowing browser-configured `prefers-*` rules (`reduced-motion`, `reduced-data`, etc), cursors, keyboard navigation, etc.
+
+There are lots of things yet to be discussed and decided from an accessibility, but that doesn't mean we can't (or shouldn't) be thinking about these things now!
+
+</AltWidth>
+
+---
+
+<AltWidth>
+
+## Code Implementations (the component library)
+
+Welcome to the (subjectively) fun part! This is where the rubber meets the road, and we can either make or break the success of the design system as a whole. The rest of the discussion today will cover the different aspects of this part of Hydrogen.
+
+</AltWidth>
+
+---
+
+# Why does Hydrogen exist?
+
+---
+
+# Systems are complex
+
+###### (and keep becoming more complex)
+
+<Notes>
+
+By nature of the software development work that we do, systems becomes more and more complex every day. This is not necessarily a bad thing, as long as we try to limit how much complexity we introduce.
+
+OUR JOB IS TO WORK TO MINIMIZE COMPLEXITY
+
+</Notes>
+
+---
+
+<AltWidth>
+
+# How can a design system reduce complexity?
+
+<Steps>
+
+- Components that work in more use-cases ("somewhat general-purpose")
+- Lower number of duplicate components
+- Minimize how often we have to refactor business logic
+
+</Steps>
+
+</AltWidth>
+
+<Notes>
+
+## Change Amplification
+
+Since our goal as an organization is to start building micro-frontend applications to enable enterprise-level scaling, having a design system is _essential_. It is not realistic to move forward without one for many reasons, most applicably because without a component library, we have to make the same components over and over in each codebase that needs them. Our current codebase already has dozens of unique buttons or contains created, and that's already hard to make changes in.
+
+Imagine doing that across 5 different projects!
+
+</Notes>
+
+---
+
+<AltWidth>
+
+# What are some benefits from having a Design System?
+
+<Steps>
+
+- Create a common language (product, design, engineering)
+- Improve cross-team transparency
+- Speed up development
+- ...eventually ☝️
+
+</Steps>
+
+</AltWidth>
+
+---
+
+<AltWidth>
+
+# Creating a common language
+
+Hydrogen is a cross-function entity. If everyone on a team is able to speak the same design language, feature work discussions become radically easier.
+
+</AltWidth>
+
+<Notes>
+
+### Better Estimates
+
+When a team is talking about the work needed for a new page, they can talk about the components needed to build that page, and that is something design and product will have a better understanding of (hint: better estimates too)
+
+### Reduced Bloat
+
+The other _major_ benefit that Hydrogen will provide comes in the form of reducing bloat. If we receive a new page from the design team, and there is a new button on the page that doesn't match any of our existing components, we can have a discussion with the team to see if we really need to build a new variant, or if we can use one of our existing components.
+
+It gives us a set of standards to live by!
+
+</Notes>
+
+---
+
+<AltWidth>
+
+# Improved transparency
+
+Hydrogen Components are built inside storybook. With a hosted gallery, anybody on the team can see and interact with existing components, and see all the documentation that goes with them.
+
+This will make the lives of product and design a billion and a half times better, guaranteed!
+
+</AltWidth>
+
+<Notes>
+
+Show storybook gallery demo
+
+</Notes>
+
+---
+
+<AltWidth>
+
+# Speed up development...... eventually
+
+While the initial development will be slower, the long-term benefits that a good component library provides will quickly begin to show!
+
+</AltWidth>
+
+<Notes>
+
+### Initially slower, but eventually unbelievable payout
+
+Although initially it will take longer to build pages since the component library is so new, once we start contributing to it consistently, it will make building new featuers and pages much quicker since everything will look consistent, so we won't have the need to nit-pick styles anywhere close to as often. Like many of the infrastructure and process changes we've added recently, this will slow us down initially, though :(
+
+</Notes>
+
+---
+
+# Establish Vocabulary and Context
+
+<Notes>
+
+As we get into the details of the component library (and contribution lifecycle), its important that we're all on the same page when it comes to the language we use. It's also important to understand the context that existed when we set up the hydrogen processes
+
+</Notes>
+
+---
+
+# SOLID (the important parts)
+
+#### ...and other design philosophies
+
+---
+
+# It is all about the interface
+
+<Notes>
+
+The `SOLID design principles` presented by Uncle Bob Martin outline some of the best practices one can use while writing object-oriented code. As a team, we have put a strong emphasis on learning about and discussing these principles. This is for good reason. They help us write better code, and design better interfaces.
+
+In fact, probably the most important part of a hydrogen component is the interface. Books like `Clean Architecture` and `A Philosophy of Software Design` very clearly explain that if you have the correct interfaces (and abstractions), the implementation of your component can change whenever you need it to, but that won't affect any of our parent components. This is _very_ cool when you think that in the near future, a single hydrogen component could be used in 5 different codebases. Imagine how much work it would be to add a new `prop` :O
+
+</Notes>
+
+---
+
+<AltWidth>
+
+# Base / Variant pattern
+
+Many organizations with mature design systems have discovered that using the base/variant pattern to build components has major benefits across the entire life of a project. We don't want to re-invent the wheel, so we've done it too.
+
+The base/variant pattern allows us to implement the core functionality of a component once, and then create styled versions of that same component without having to re-write the functionality.
+
+Examples of this include the `button` component (base, primary, secondary, tertiary), the `useDialog` hook, `banner`, etc.
+
+</AltWidth>
+
+---
+
+# ADRS
+
+---
+
+<AltWidth>
+
+# Let the docs tell the story so we don't have to
+
+`ADR` stands for `Architectural Decision Record` and is a fancy way of writing structured documentation that explains why a component is built the way that it is. A single ADR should outline a single decision made. Right now we have ADRs for the initial interface of a component, but if in 3 months the button component needs a new `onDoubleClick` prop, an ADR would be created to explain why.
+
+</AltWidth>
+
+---
+
+<AltWidth>
+
+# The 5 parts of an ADR
+
+<Steps>
+
+- Metadata
+  - Timestamp, Authors, Title
+- Summary
+  - What is the TL;DR of the content below
+- Discussion (context)
+  - Why is this change being made? Who was part of the conversation, what was discussed, what alternatives are there, etc
+- Solution
+  - Based on the discussions that took place, what is the final decision?
+- Consequences
+  - Once this change is made, what things will come from it? are there downsides? future changes that need to be made?
+
+</Steps>
+
+</AltWidth>
+
+---
+
+# Hydrogen Lifecycle
+
+---
+
+<AltWidth>
+
+# What to expect when you're expecting.....new feature work
+
+</AltWidth>
+
+---
+
+![New Challenger](https://imgur.com/NT8DEPi.png)
+
+<Notes>
+
+So you're in a team meeting and your PM is showing you a new mockup for an upcoming feature! One of the first questions you should ask as a team is `should this be built in hydrogen?`
+
+</Notes>
+
+---
+
+<AltWidth>
+
+# What qualifies as a hydrogen component?
+
+</AltWidth>
+
+<Notes>
+
+### What in this mockup should be a component?
+
+Great question! If you're not used to thinking about this, it can be difficult to decide whether something should be built in hydrogen or in an application. Lets establish a few guidelines, then go through an example or two.
+
+#### No Data
+
+First, `no hydrogen component should be reliant on data`. They will certainly need to be aware of data _structures_ and _interfaces_, but if a component knows how to fetch its own data, it has been built incorrectly, or should not have been built in hydrogen.
+
+#### Somewhat general-purpose / cross-application
+
+Second, something should be built in hydrogen if it can be used across applications, _mostly_. `Modals`, `Buttons`, `Input Fields`, and `Display Text` (paragraphs, headers, labels) are great candidates to be hydrogen components, but a `confirm close drawer?` modal might not be. This is because that modal is pretty application-specific.
+
+But that is why things can get tricky.. a `confirm close drawer?` modal will likely be used in all of our applications, so we're in a weird spot where a component is application-specific, or reliant on data, but should not be built in hydrogen. We have plans for that in the future (in the form of shared components via module federation), but that is a discussion for another time. For now, the solution is to build the component in the parent application, and refactor later :(
+
+</Notes>
+
+---
+
+![Decide what is a component](https://imgur.com/nSUlbH9.png)
+
+---
+
+<AltWidth>
+
+# We found a hydrogen candidate! Now what?
+
+</AltWidth>
+
+<Notes>
+
+Once you have identified a new component that should be built in hydrogen, you should figure out if that component already exists in any form. If the goal of Hydrogen is to create consistency across our applications, making single-use variants seems counter-intuitive. We have the responsibility to make sure we don't create variant bloat, so if we are asked to build something that doesn't fit into the design system, we should discuss if its really a component we want to invest in.
+
+A couple of questions that would be good to ask here are:
+
+- If this component does _not_ match the design system, are we sure we want to build it?
+- Can we use an existing hydrogen component here?
+- If we need to build a new component, what code has already been written for us (the base component, other variant components, etc)?
+
+If we are absolutely sure we want the new component, check to see what already exists. If the base component is already done, then half of our job is already done! Estimate the component story and get ready for the fun stuff!
+
+</Notes>
+
+---
+
+<AltWidth>
+
+# Building a Hydrogen component
+
+_phew!_ We finally made it! It's time to build a hydrogen component. The next few slides will talk about the process of building a hydrogen component
+
+</AltWidth>
+
+---
+
+<AltWidth>
+
+# Design Discussion
+
+- Design it twice
+- Be "somewhat general-purpose"
+
+</AltWidth>
+
+<Notes>
+
+This is, in my opinion, the _most important part of building a hydrogen component_. The first step to creating a hydrogen component is to have an in-person discussion with at least 1 other engineer to talk about how the component will fit with the rest of our code. `This is also the hardest part` because its so new to most of us, but also because its the most abstract.
+
+In `A philosophy of Software Design`, it is recommended to design every interface twice so that you can gain the confidence that you have designed the _correct_ abstraction. In practice, this means that the design discussion should be focused on thinking through every way this component will be used in our current application (based on existing designs), but also every way that it _could_ be used in the future, even if we haven't designed them yet.
+
+</Notes>
+
+---
+
+<AltWidth>
+
+# Some Design Questions
+
+<Steps>
+
+- are there any other component libraries that have built a similar component? what props do they allow?
+- what do the native HTML APIs for this component look like?
+- where in our current application are we using this component?
+- is the interface we have so far as simple as it can be? does it support all of our use-cases?
+- do all the variants of this component use this same API, or do we have properties that should be moved elsewhere?
+
+</Steps>
+
+</AltWidth>
+
+<Notes>
+
+That is not an all-inclusive list, but hopefully its enough to get you thinking about the right things. Our components should be "somewhat general-purpose", meaning that they meet our needs now without a lot of effort in the parent, but also will support our needs in the future.
+
+</Notes>
+
+---
+
+<AltWidth>
+
+# Writing an ADR
+
+After you have had an in-person discussion with other developers, and believe that you have the best interface, its time to formalize these decisions; it's time to write your ADR!
+
+As outlined previously, an ADR is made up of 5 sections: `Metadata`, `Summary`, `Discussion (Context)`, `Solution`, and `Consequences`.
+
+The ADR should outline who helped design the component, what things you considered in your design, why you decided on the current interface, and what effects that will have on the rest of hydrogen, and other parent applications.
+
+</AltWidth>
+
+---
+
+<AltWidth>
+
+# Draft PR; ADR Approval
+
+Another developer should be able to read your ADR and understand the decisions that you made. If you believe that is the case, you can submit your ADR for approval.
+
+Once a pull request has been created, another developer (who was not a part of the design discussion) should review the ADR to make sure they understand the changes being made. This creates a very collaborative environment when building hydrogen components, but it also means `at least 3 developers` understand every component that is added to hydrogen. That's really cool!!
+
+After your PR has been approved, you can start building the component.
+
+</AltWidth>
+
+---
+
+<AltWidth>
+
+# Test Driven Development - Initial Implementation
+
+In recent months, we have put a strong emphasis into writing tests before we build our actual implementation. This is hugely important in any code we write, and hydrogen is no different. low-level components get imported in many locations in our apps, so we need to be confident that we are shipping our best code.
+
+</AltWidth>
+
+<Notes>
+
+### Psuedo code is another way to design
+
+A personal preference here is to write a bunch of `it.todo()` statements so that I have a high-level understanding of the behavior of my component. I find that it is easy to get so focused and in-the-weeds of my component that I forget to step back and assess where my component is currently at. I consider this process to be part of the design of my component. I often write psuedo-code in a similar way. Both practices help me to consider more aspects of my component than just the lines of code I am currently writing.
+
+Regardless of the specifics of the process you employ, tests are a required part of the hydrogen lifecycle.
+
+</Notes>
+
+---
+
+<AltWidth>
+
+# Release & Ship
+
+Right now, only hydrogen codeowners (Kyle and Andrew) can deploy & publish to NPM. This will change in the future, but an automated process has not been set up yet.
+
+</AltWidth>
+
+<Notes>
+
+After you have finished building your component, its time to get it into production and make it useable by our main applications.
+
+</Notes>
+
+---
+
+<AltWidth>
+
+# Hydrogen in a larger context
+
+Now that a shared vocabulary has been established for us to talk with design, product, and each other, and the processed for contributing to hydrogen (both the system and the library) have been outlined, its time to step back again and think about the future of hydrogen, and how it fits into our whole ecosystem.
+
+</AltWidth>
+
+---
+
+<AltWidth>
+
+# Ether repository
+
+In our github organization, we have an `ether` repo. This is a `lerna`-managed monorepo that contains all of our NPM packages; `hydrogen`, `mercury`, `configurations`, etc
+
+</AltWidth>
+
+<Notes>
+
+This repo is managed by `lerna`, so will have a single deployment pipeline for all packages. Every package here currently needs a lot of work, and hydrogen is the only one that is currently published. Eventually, our automated deployment pipeline will be applied to all of the packages contained here.
+
+</Notes>
+
+---
+
+<AltWidth>
+
+# What are the long-term goals for Hydrogen?
+
+#### The simple answer is "nobody knows"
+
+</AltWidth>
+
+<Notes>
+
+### Wishfully open-sourced
+
+Personally, I think it would be really cool to make the library open-source so that other organizations can use the components that we build. That would require even more work on our part to make sure the components support as many use-cases as possible, so its not likely to happen anytime soon, if ever.
+
+### All internal applications
+
+Hydrogen will certainly be used by future applications and micro-frontends that we build internally. The customer dashboard is one such use-case. It will be built on top of hydrogen, and only build custom variants when needed. When we start pulling parts of our app into their own codebases, they will also start needing hydrogen components.
+
+### V2, V3 and beyond (accessibility, color schemes, mobile-responsive)
+
+At a later date, I suspect we will also support mobile-responsiveness, accessibility (of all forms), and custom color schemes as first-class paradigms in hydrogen. White-labeling is not currently supported, but absolutely needs to be.
+
+</Notes>
+
+---
+
+<AltWidth>
+
+# Code Owners / Quality Gates
+
+The Customer team is the owner of hydrogen. Even though Kyle is not on the Customer team, he is also an owner of the library. They are responsible for the top-level decisions for its future, and for quality assurance.
+
+</AltWidth>
+
+---
+
+<AltWidth>
+
+# Micro Frontends & New Applications
+
+The immediate need of hydrogen will be to support the development of micro-frontend applications. This is happening soon, which is why this training is happening now.
+
+</AltWidth>
+
+---
+
+<AltWidth>
+
+# Thank you
+
+Thank you for being present. Please feel free to continue this discussion and ask questions outside of this meeting!
+
+</AltWidth>
+
+---
+
+<AltWidth>
+
+![An A.Garvin Presentation](https://imgur.com/6DOignb.png)
+
+</AltWidth>
